@@ -14,3 +14,4 @@ transformations dbt (dbt job Fabric) vers un Warehouse, versioning GitHub.
 - `models/staging` : nettoyage et typage des sources.
 - `models/marts` : dimensions et faits (à venir).
 - `macros/generate_schema_name.sql` : écrit dans les schémas `silver` / `gold` tels quels.
+![alt text](image.png)
