@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: stg_dvf_mutations
+    description: "Mutations DVF nettoyées et typées (couche Silver)."
+    columns:
+      - name: id_mutation
+        description: "Identifiant de la mutation (plusieurs lignes possibles par mutation)."
+        data_tests:
+          - not_null
+      - name: date_mutation
+        description: "Date de la mutation, convertie depuis le texte."
+        data_tests:
+          - not_null
