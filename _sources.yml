@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: "Données DVF brutes ingérées dans le Lakehouse Bronze_immo (tout en texte)."
+    database: Bronze_immo
+    schema: dbo
+    tables:
+      - name: bronze_dvf_mutations
+        description: "Mutations foncières DVF géolocalisées, une ligne par local/parcelle."
