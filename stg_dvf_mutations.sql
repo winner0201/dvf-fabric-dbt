@@ -1,3 +1,6 @@
+{{ config(
+    materialized='view'
+) }}
 select
     id_mutation,
     try_cast(date_mutation as date)                  as date_mutation,
