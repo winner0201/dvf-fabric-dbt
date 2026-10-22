@@ -62,7 +62,12 @@ Architecture Médaillon :
 
 ## Lignage
 
-![Graphe de lignage dbt](docs/images/lineage.png)
+<img width="1776" height="731" alt="image" src="https://github.com/user-attachments/assets/1c958e7b-87b9-4e85-aa4d-5a7b665d0312" />
+
+
+## Etat des executions
+<img width="1355" height="667" alt="image" src="https://github.com/user-attachments/assets/1697cab6-331f-4790-bfa4-92101b18e4e1" />
+
 
 ## Choix de modélisation
 
