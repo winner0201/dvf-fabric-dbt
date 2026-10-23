@@ -63,7 +63,8 @@ Architecture Médaillon :
 
 ## Lignage
 
-![Lignage](docs/images/lineage.png)
+<img width="1796" height="822" alt="image" src="https://github.com/user-attachments/assets/763e3615-551e-4e3c-8e90-e044a3400ea9" />
+
 
 ### Rapport Power BI
 
@@ -71,19 +72,20 @@ Le rapport s'appuie sur un modèle sémantique construit sur les trois tables Go
 
 ### Vue d'ensemble
 
-![Rapport Power BI, page Vue d'ensemble](docs/images/rapport_vue_ensemble.png)
+<img width="1887" height="952" alt="immo_overview" src="https://github.com/user-attachments/assets/780ae6fd-df3c-48d3-82ed-b4757d21fcde" />
 
 Indicateurs clés (nombre de ventes, prix m² médian avec sa variation par rapport au mois précédent, surface moyenne, valeur totale), évolution mensuelle du prix m² médian et nombre de ventes par département.
 
 ### Communes
 
-![Rapport Power BI, page Communes](docs/images/rapport_communes.png)
+<img width="1887" height="942" alt="commune_immo" src="https://github.com/user-attachments/assets/7b3231db-c7a3-4db9-a15b-21418aa7a349" />
+
 
 Classement des communes par prix m² médian, avec le nombre de ventes et la surface moyenne, et répartition des ventes par tranche de prix au m². Les tranches sont calculées dans dbt, dans la table de faits.
 
 ### Maison vs Appartement
 
-![Rapport Power BI, page Maison vs Appartement](docs/images/rapport_maison_vs_appartement.png)
+<img width="1895" height="947" alt="Appart_com" src="https://github.com/user-attachments/assets/47b97763-6e6a-45f0-8651-5cd39855b114" />
 
 Comparaison côte à côte des deux types de local : nombre de ventes, prix m² médian, surface moyenne et nombre moyen de pièces, puis évolution mensuelle et prix par département.
 
