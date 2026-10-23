@@ -65,6 +65,9 @@ Architecture Médaillon :
 
 <img width="1796" height="822" alt="image" src="https://github.com/user-attachments/assets/763e3615-551e-4e3c-8e90-e044a3400ea9" />
 
+## Etat des executions
+
+<img width="1777" height="766" alt="image" src="https://github.com/user-attachments/assets/8e50046d-5dfb-4841-8a17-e4a2f0fcbccd" />
 
 ### Rapport Power BI
 
