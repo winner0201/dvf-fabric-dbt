@@ -71,7 +71,8 @@ Le rapport s'appuie sur un modèle sémantique construit sur les trois tables Go
 
 ### Vue d'ensemble
 
-![Rapport Power BI, page Vue d'ensemble](docs/images/rapport_vue_ensemble.png)
+<img width="1887" height="952" alt="immo_overview" src="https://github.com/user-attachments/assets/9de76149-491b-41c2-86ca-4a7f4fc28cb1" />
+
 
 Indicateurs clés (nombre de ventes, prix m² médian avec sa variation par rapport au mois précédent, surface moyenne, valeur totale), évolution mensuelle du prix m² médian et nombre de ventes par département.
 
