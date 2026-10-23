@@ -41,6 +41,10 @@ Architecture Médaillon :
 
 ## Structure du dépôt
 
+
+
+## Structure du dépôt
+
 ```
 .
 ├── dbt_project.yml
@@ -61,74 +65,36 @@ Architecture Médaillon :
 └── docs/images/                     # captures : lignage dbt et rapport Power BI
 ```
 
-## Lignage
+## Lignage et Rapport Power BI
 
-![Lignage](docs/images/lineage.png)
+![Lignage](./docs/images/lineage.png)
 
-### Rapport Power BI
+Le rapport s'appuie sur un modèle sémantique construit sur les trois tables Gold (`fct_ventes_residentielles`, `dim_date`, `dim_commune`), reliées par `date_key` et `commune_key`, et se divise en trois pages principales (Vue d'ensemble, Communes, Maison vs Appartement) illustrées ci-dessous :
 
-Le rapport s'appuie sur un modèle sémantique construit sur les trois tables Gold (`fct_ventes_residentielles`, `dim_date`, `dim_commune`), reliées par `date_key` et `commune_key`. Il compte trois pages et des filtres communs : département, type de local, année et mois.
+- **Vue d'ensemble** : ![Rapport Power BI, page Vue d'ensemble](./docs/images/rapport_vue_ensemble.png)
+- **Communes** : ![Rapport Power BI, page Communes](./docs/images/rapport_communes.png)
+- **Maison vs Appartement** : ![Rapport Power BI, page Maison vs Appartement](./docs/images/rapport_maison_vs_appartement.png)
 
-### Vue d'ensemble
+### Principales mesures DAX et Modélisation
+Les mesures clés incluent `Nb ventes`, `Prix m² médian`, `Variation prix m² vs M-1` et `% ventes par tranche`. Côté modélisation, le grain de la table de faits est positionné à « une mutation » (ventes uniques d'appartements ou maisons) pour garantir la fiabilité des prix au m², tandis que `dim_date` est générée directement à partir des données sources pour s'adapter aux limitations des CTE récursives du Warehouse Fabric.
 
-![Rapport Power BI, page Vue d'ensemble](docs/images/rapport_vue_ensemble.png)
+## Qualité des données et Reproduction
 
-Indicateurs clés (nombre de ventes, prix m² médian avec sa variation par rapport au mois précédent, surface moyenne, valeur totale), évolution mensuelle du prix m² médian et nombre de ventes par département.
+Des tests dbt sont appliqués sur chaque couche (not_null, unique, relationships, accepted_values). Pour reproduire le projet, créez l'espace de travail et les stockages sur Microsoft Fabric, exécutez le notebook d'ingestion PySpark, configurez le dbt job avec les modèles du dépôt, puis finalisez avec la création du modèle sémantique et du rapport Power BI.
 
-### Communes
+## Limites et perspectives
+Le projet charge actuellement les années 2022 à 2024 sur une sélection de départements franciliens. Les axes d'amélioration incluent l'automatisation de la synchronisation Git, le filtrage des valeurs extrêmes et le versioning complet du fichier Power BI (au format PBIP).
 
-![Rapport Power BI, page Communes](docs/images/rapport_communes.png)
+🚀 Commandes pour envoyer la modification :
 
-Classement des communes par prix m² médian, avec le nombre de ventes et la surface moyenne, et répartition des ventes par tranche de prix au m². Les tranches sont calculées dans dbt, dans la table de faits.
+Une fois le fichier enregistré (Ctrl + S), exécutez la séquence suivante dans votre terminal :
+bash
+git add .
+git commit -m "Fix: correction des chemins relatifs des images du README"
+git push origin main
+Utilisez le code avec précaution.
+Maintenant que le préfixe ./ est en place et que les syntaxes d'images ont été nettoyées, les graphiques Power BI s'affichent-ils correctement sur votre page GitHub ?
+Les réponses de l'IA peuvent contenir des erreurs. En savoir plus
 
-### Maison vs Appartement
-
-![Rapport Power BI, page Maison vs Appartement](docs/images/rapport_maison_vs_appartement.png)
-
-Comparaison côte à côte des deux types de local : nombre de ventes, prix m² médian, surface moyenne et nombre moyen de pièces, puis évolution mensuelle et prix par département.
-
-### Principales mesures DAX
-
-- `Nb ventes` : nombre de lignes de la table de faits, soit le nombre de ventes puisque le grain est une mutation.
-- `Prix m² médian` : médiane du prix au m².
-- `Variation prix m² vs M-1` : variation par rapport au mois précédent, calculée à partir d'un index année × 12 + mois. Elle fonctionne même si la dimension calendrier a des trous, et ne s'affiche que lorsqu'un seul mois est sélectionné.
-- `% ventes par tranche` : part des ventes de chaque tranche de prix au m², pour la sélection en cours.
-
-## Choix de modélisation
-
-**Le grain du DVF.** Une mutation (une vente) peut comporter plusieurs lignes, une par local ou par parcelle, et la valeur foncière est répétée sur chacune. Additionner cette colonne telle quelle fausse les montants. La table de faits est donc au grain « une mutation » : elle ne garde que les ventes de maisons et d'appartements, avec un prix et une surface renseignés, et uniquement les mutations qui comportent un seul local. Le prix au m² est alors fiable.
-
-Cette règle est une simplification assumée : les ventes multi-locaux sont écartées.
-
-**Une dimension calendrier issue des données.** `dim_date` est construite à partir des dates présentes dans les données. Cela évite les CTE récursives, dont la prise en charge dans le Warehouse Fabric n'est pas garantie.
-
-**Types compatibles avec le Warehouse Fabric.** Le Warehouse n'accepte pas `nvarchar`. Les libellés de mois sont donc produits par un `case` plutôt que par `datename`, qui renvoie du `nvarchar`.
-
-**Schémas explicites.** La macro `generate_schema_name` envoie les modèles dans `silver` et `gold`, sans préfixe.
-
-## Qualité des données
-
-Des tests dbt sont définis sur chaque couche :
-
-- `not_null` sur `id_mutation` et `date_mutation` (Silver)
-- `unique` et `not_null` sur les clés des dimensions et sur `id_mutation` dans la table de faits
-- `relationships` entre la table de faits et les dimensions
-- `accepted_values` sur `type_local` (`Maison`, `Appartement`)
-
-## Reproduire le projet
-
-1. Créer dans Fabric un workspace, un Lakehouse `Bronze_immo` et un Warehouse `Silver_gold_immo`.
-2. Importer le notebook `notebooks/01_ingestion_bronze_dvf.ipynb`, l'attacher au Lakehouse `Bronze_immo` et l'exécuter. Il crée la table `bronze_dvf_mutations`.
-3. Activer le paramètre de tenant « dbt jobs (preview) », puis créer un dbt job relié au Warehouse `Silver_gold_immo` avec le schéma `silver`.
-4. Copier dans le dbt job les fichiers de ce dépôt (`dbt_project.yml`, `macros/`, `models/`).
-5. Lancer la commande `build`.
-6. Créer un modèle sémantique sur les tables `gold.fct_ventes_residentielles`, `gold.dim_date` et `gold.dim_commune`, avec les relations sur `date_key` et `commune_key`, puis construire le rapport Power BI. Le fichier du rapport n'est pas versionné dans ce dépôt, seules les captures le sont.
-
-## Limites et pistes d'amélioration
-
-- Trois années sont chargées (2022 à 2024). Ajouter d'autres années ou départements demande de compléter la liste dans le notebook d'ingestion.
-- Les valeurs extrêmes du prix au m² ne sont pas encore filtrées.
-- Les sources ne sont pas encore contrôlées par des tests de fraîcheur.
-- La synchronisation entre Fabric et GitHub est manuelle. L'intégration Git du workspace n'a pas pu être activée sur mon tenant.
 - Le fichier du rapport Power BI n'est pas versionné. Un export au format projet Power BI (PBIP) permettrait de le suivre dans Git.
 
