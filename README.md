@@ -88,7 +88,8 @@ Classement des communes par prix m² médian, avec le nombre de ventes et la sur
 
 ### Maison vs Appartement
 
-<img width="1895" height="947" alt="Appart_com" src="https://github.com/user-attachments/assets/47b97763-6e6a-45f0-8651-5cd39855b114" />
+<img width="1877" height="935" alt="image" src="https://github.com/user-attachments/assets/bb79d4b8-2fcc-42a6-9930-1adb7d4576b1" />
+
 
 Comparaison côte à côte des deux types de local : nombre de ventes, prix m² médian, surface moyenne et nombre moyen de pièces, puis évolution mensuelle et prix par département.
 
