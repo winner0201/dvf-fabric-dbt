@@ -63,7 +63,7 @@ Architecture Médaillon :
 
 ## Lignage
 
-![Graphe de lignage dbt](docs/images/lineage.png)
+![Lignage](docs/images/lineage.png)
 
 ### Rapport Power BI
 
@@ -71,14 +71,13 @@ Le rapport s'appuie sur un modèle sémantique construit sur les trois tables Go
 
 ### Vue d'ensemble
 
-<img width="1887" height="952" alt="immo_overview" src="https://github.com/user-attachments/assets/9de76149-491b-41c2-86ca-4a7f4fc28cb1" />
-
+![Rapport Power BI, page Vue d'ensemble](docs/images/rapport_vue_ensemble.png)
 
 Indicateurs clés (nombre de ventes, prix m² médian avec sa variation par rapport au mois précédent, surface moyenne, valeur totale), évolution mensuelle du prix m² médian et nombre de ventes par département.
 
 ### Communes
 
-![Rapport Power BI, page Communes](docs/images/rapport_communes.png) 
+![Rapport Power BI, page Communes](docs/images/rapport_communes.png)
 
 Classement des communes par prix m² médian, avec le nombre de ventes et la surface moyenne, et répartition des ventes par tranche de prix au m². Les tranches sont calculées dans dbt, dans la table de faits.
 
@@ -132,3 +131,4 @@ Des tests dbt sont définis sur chaque couche :
 - Les sources ne sont pas encore contrôlées par des tests de fraîcheur.
 - La synchronisation entre Fabric et GitHub est manuelle. L'intégration Git du workspace n'a pas pu être activée sur mon tenant.
 - Le fichier du rapport Power BI n'est pas versionné. Un export au format projet Power BI (PBIP) permettrait de le suivre dans Git.
+
