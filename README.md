@@ -77,7 +77,7 @@ Indicateurs clés (nombre de ventes, prix m² médian avec sa variation par rapp
 
 ### Communes
 
-![Rapport Power BI, page Communes](docs/images/rapport_communes.png)
+![Rapport Power BI, page Communes](docs/images/rapport_communes.png) 
 
 Classement des communes par prix m² médian, avec le nombre de ventes et la surface moyenne, et répartition des ventes par tranche de prix au m². Les tranches sont calculées dans dbt, dans la table de faits.
 
