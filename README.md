@@ -65,7 +65,7 @@ Architecture Médaillon :
 
 ![Graphe de lignage dbt](docs/images/lineage.png)
 
-## Rapport Power BI
+### Rapport Power BI
 
 Le rapport s'appuie sur un modèle sémantique construit sur les trois tables Gold (`fct_ventes_residentielles`, `dim_date`, `dim_commune`), reliées par `date_key` et `commune_key`. Il compte trois pages et des filtres communs : département, type de local, année et mois.
 
